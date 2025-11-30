@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Optional, List, Dict
 
 app = FastAPI()
 
@@ -21,11 +22,17 @@ app.add_middleware(
 class RequestBody(BaseModel):
     message: str
 
-@app.post("/")
-def home():
-    return {"message": "API is running"}
+# 1. Kontrak request
+class ChatRequest(BaseModel):
+    message: str
 
-# Endpoint POST yang menerima JSON
-@app.post("/process")
-def your_api(body: RequestBody):
-    return {"received": body}
+# 2. Kontrak response
+class ChatResponse(BaseModel):
+    reply: str
+
+@app.post("/chat", response_model=ChatResponse)
+def chat_endpoint(req: ChatRequest):
+
+    generated_reply = f"Pesan diterima: {req.message}"
+
+    return ChatResponse(reply=generated_reply)
