@@ -18,21 +18,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Format JSON yang diharuskan oleh API
-class RequestBody(BaseModel):
-    message: str
-
-# 1. Kontrak request
 class ChatRequest(BaseModel):
     message: str
 
-# 2. Kontrak response
+class ChatData(BaseModel):
+    message: str
+    reply : str
+
 class ChatResponse(BaseModel):
-    reply: str
+    message : str
+    data: ChatData
 
 @app.post("/chat", response_model=ChatResponse)
 def chat_endpoint(req: ChatRequest):
-
     generated_reply = f"Pesan diterima: {req.message}"
 
-    return ChatResponse(reply=generated_reply)
+    return ChatResponse(
+        message="message telah berhasil dikirim",
+        data=ChatData(
+            message=req.message,
+            reply=generated_reply
+        )
+    )
