@@ -29,9 +29,9 @@ class ChatResponse(BaseModel):
     message : str
     data: ChatData
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/api/chat", response_model=ChatResponse)
 def chat_endpoint(req: ChatRequest):
-    generated_reply = f"Pesan diterima: {req.message}"
+    generated_reply = f"{req.message}"
 
     return ChatResponse(
         message="message telah berhasil dikirim",
