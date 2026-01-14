@@ -1,3 +1,5 @@
+from app.ai.ai_engine import generate_answer
+
 conversation_state = "WAIT_MENU"
 conversation_data = {}
 
@@ -125,12 +127,39 @@ def handle_message(user_message: str) -> str:
     # =========================
     if conversation_state == "WAIT_QUESTION":
 
-        conversation_data["question"] = user_message
+        # ===== 1. KEMBALI KE MENU UTAMA =====
+        if user_message == "0":
+            reset_conversation()
+            return (
+                "Kembali ke menu utama.\n"
+                "Silakan pilih menu berikut:\n"
+                "1. Mata Kuliah\n"
+                "2. MBKM\n"
+                "3. Informasi Umum"
+            )
 
-        return (
-            "Pertanyaan Anda telah diterima.\n"
-            "Konteks lengkap berhasil dikumpulkan.\n"
-            "(Tahap berikutnya: diproses oleh model AI)"
+        # ===== 2. SIMPAN PERTANYAAN =====
+        conversation_data["question"] = (
+            user_message if user_message.strip()
+            else "Jelaskan informasi terkait."
         )
 
-    return "Terjadi kesalahan state. Silakan refresh halaman."
+        # ===== 3. SIAPKAN KONTEKS AI =====
+        ai_context = {
+            "menu": conversation_data.get("menu"),
+            "sub_menu": conversation_data.get("sub_menu"),
+            "semester": conversation_data.get("semester"),
+            "question": conversation_data.get("question"),
+        }
+
+        # ===== 4. PANGGIL AI =====
+        answer = generate_answer(ai_context)
+
+        # ===== 5. TETAP DI STATE INI =====
+        return (
+            f"{answer}\n\n"
+            "Ketik pertanyaan lain untuk topik ini,\n"
+            "atau ketik 0 untuk kembali ke menu utama."
+        )
+
+

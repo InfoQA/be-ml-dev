@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.core.state import reset_conversation, handle_message
+from app.ai.loader import load_models
 
 app = FastAPI()
 
@@ -35,14 +36,17 @@ class ChatResponse(BaseModel):
     data: ChatData
 
 
+@app.on_event("startup")
+def startup_event():
+    load_models()
+
 # =========================
 # ENDPOINT
 # =========================
 @app.post("/api/chat", response_model=ChatResponse)
-def chat_endpoint(req: ChatRequest):
+async def chat_endpoint(req: ChatRequest):
     user_message = req.message.strip()
 
-    # INIT (PAGE LOAD / REFRESH)
     if user_message == "__init__":
         reset_conversation()
         reply = (
