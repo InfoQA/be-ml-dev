@@ -158,8 +158,6 @@ def handle_message(user_message: str) -> str:
         # ===== 5. TETAP DI STATE INI =====
         return (
             f"{answer}\n\n"
-            "Ketik pertanyaan lain untuk topik ini,\n"
-            "atau ketik 0 untuk kembali ke menu utama."
         )
 
 

@@ -1,3 +1,4 @@
+# Tidak jadi digunakan
 def _prompt_mata_kuliah(
     semester: str,
     question: str,
