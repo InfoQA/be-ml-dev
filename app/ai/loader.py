@@ -9,25 +9,30 @@ MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 
 def load_models():
-    print("🔄 Loading models...")
+    print("🔄 Loading embedding & FAISS index...")
 
     embedding_path = os.path.join(MODEL_DIR, "embedding_model")
-    faiss_path = os.path.join(MODEL_DIR, "faiss_index")
+    faiss_path = os.path.join(MODEL_DIR, "faiss_index3")
 
-    # === Embedding ===
+    if not os.path.exists(embedding_path):
+        raise FileNotFoundError("Embedding model tidak ditemukan")
+
+    if not os.path.exists(faiss_path):
+        raise FileNotFoundError("FAISS index tidak ditemukan")
+
+    # === Load Embedding ===
     embeddings = HuggingFaceEmbeddings(
         model_name=embedding_path
     )
 
-    # === FAISS ===
+    # === Load FAISS ===
     vector_db = FAISS.load_local(
         faiss_path,
         embeddings,
         allow_dangerous_deserialization=True
     )
 
-    models["retriever"] = vector_db.as_retriever(
-        search_kwargs={"k": 3}
-    )
+    # Simpan ke global models
+    models["vector_db"] = vector_db
 
-    print("✅ Models loaded:", list(models.keys()))
+    print("✅ Model berhasil dimuat:", list(models.keys()))
