@@ -23,8 +23,8 @@ def load_vector_db():
 def load_models():
     print("🔄 Loading embedding & FAISS index...")
 
-    embedding_path = os.path.join(MODEL_DIR, "embedding_model2")
-    faiss_path = os.path.join(MODEL_DIR, "faiss_index3")
+    embedding_path = os.path.join(MODEL_DIR, "embedding_model")
+    faiss_path = os.path.join(MODEL_DIR, "faiss_index")
 
     if not os.path.exists(embedding_path):
         raise FileNotFoundError("Embedding model tidak ditemukan")
