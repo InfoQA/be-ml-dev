@@ -21,7 +21,7 @@ def load_vector_db():
     return vector_db
 
 def load_models():
-    print("🔄 Loading embedding & FAISS index...")
+    print("Loading embedding & FAISS index...")
 
     embedding_path = os.path.join(MODEL_DIR, "embedding_model")
     faiss_path = os.path.join(MODEL_DIR, "faiss_index")
@@ -44,7 +44,5 @@ def load_models():
         allow_dangerous_deserialization=True
     )
 
-    # Simpan ke global models
     models["vector_db"] = vector_db
-
-    print("✅ Model berhasil dimuat:", list(models.keys()))
+    print("Model berhasil dimuat:", list(models.keys()))

@@ -11,7 +11,7 @@ from app.ai.loader import models
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 if not GOOGLE_API_KEY:
-    raise RuntimeError("❌ GOOGLE_API_KEY belum ter-load.")
+    raise RuntimeError("GOOGLE_API_KEY belum ter-load.")
 
 client = genai.Client(api_key=GOOGLE_API_KEY, http_options={'api_version': 'v1alpha'})
 GEMINI_MODEL = "gemini-flash-latest"
@@ -58,7 +58,7 @@ def generate_answer(context: Dict) -> str:
     try:
         docs = vector_db.similarity_search(normalized_question, k=30)
     except Exception as e:
-        print("❌ FAISS error:", e)
+        print("FAISS error:", e)
         return "Terjadi kesalahan saat mencari informasi."
 
     if not docs:
@@ -136,5 +136,5 @@ JAWABAN:
         return response.text.strip()
 
     except Exception as e:
-        print("❌ Gemini error:", e)
+        print("Gemini error:", e)
         return "Terjadi kesalahan saat menghasilkan jawaban."
