@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-dotenv
+
+# LangChain & Vector Store
+langchain
+langchain-community
+langchain-huggingface
+faiss-cpu
+
+# Google Gemini
+google-generativeai
+
+# Utilities
+pydantic
