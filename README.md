@@ -117,29 +117,6 @@ http://127.0.0.1:8000/redoc
 
 ---
 
-## 🔌 Endpoint Utama
-
-### POST `/api/chat`
-**Request**
-```json
-{
-  "message": "1"
-}
-```
-
-**Response**
-```json
-{
-  "message": "message telah berhasil dikirim",
-  "data": {
-    "message": "1",
-    "reply": "Silakan masukkan semester yang diinginkan (1–8)."
-  }
-}
-```
-
----
-
 ## 🧠 Fitur Utama
 - Finite State Conversation (menu → sub menu → pertanyaan)
 - Retrieval menggunakan **FAISS similarity search**
