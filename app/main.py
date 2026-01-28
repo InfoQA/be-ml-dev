@@ -1,7 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
 from app.core.state import reset_conversation, handle_message
 from app.ai.loader import load_models
 
@@ -10,6 +12,7 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:4173"
 ]
 
 app.add_middleware(
@@ -30,11 +33,9 @@ class ChatData(BaseModel):
     message: str
     reply: str
 
-
 class ChatResponse(BaseModel):
     message: str
     data: ChatData
-
 
 @app.on_event("startup")
 def startup_event():

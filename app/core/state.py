@@ -3,7 +3,6 @@ from app.ai.ai_engine import generate_answer
 conversation_state = "WAIT_MENU"
 conversation_data = {}
 
-
 def reset_conversation():
     global conversation_state, conversation_data
     conversation_state = "WAIT_MENU"
@@ -127,7 +126,6 @@ def handle_message(user_message: str) -> str:
     # =========================
     if conversation_state == "WAIT_QUESTION":
 
-        # ===== 1. KEMBALI KE MENU UTAMA =====
         if user_message == "0":
             reset_conversation()
             return (
@@ -138,13 +136,11 @@ def handle_message(user_message: str) -> str:
                 "3. Informasi Umum"
             )
 
-        # ===== 2. SIMPAN PERTANYAAN =====
         conversation_data["question"] = (
             user_message if user_message.strip()
             else "Jelaskan informasi terkait."
         )
 
-        # ===== 3. SIAPKAN KONTEKS AI =====
         ai_context = {
             "menu": conversation_data.get("menu"),
             "sub_menu": conversation_data.get("sub_menu"),
@@ -152,10 +148,8 @@ def handle_message(user_message: str) -> str:
             "question": conversation_data.get("question"),
         }
 
-        # ===== 4. PANGGIL AI =====
         answer = generate_answer(ai_context)
 
-        # ===== 5. TETAP DI STATE INI =====
         return (
             f"{answer}\n\n"
         )

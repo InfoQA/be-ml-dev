@@ -7,11 +7,23 @@ models = {}
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
+def load_vector_db():
+    embedding = HuggingFaceEmbeddings(
+        model_name="embedding_model"
+    )
+
+    vector_db = FAISS.load_local(
+        "data/faiss_index",
+        embedding,
+        allow_dangerous_deserialization=True
+    )
+
+    return vector_db
 
 def load_models():
     print("🔄 Loading embedding & FAISS index...")
 
-    embedding_path = os.path.join(MODEL_DIR, "embedding_model")
+    embedding_path = os.path.join(MODEL_DIR, "embedding_model2")
     faiss_path = os.path.join(MODEL_DIR, "faiss_index3")
 
     if not os.path.exists(embedding_path):
